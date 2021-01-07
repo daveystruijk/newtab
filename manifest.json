@@ -1,0 +1,9 @@
+{
+  "name": "Dave's New Tab",
+  "version": "1.0",
+  "description": "",
+  "manifest_version": 3,
+  "chrome_url_overrides" : {
+		"newtab": "newtab.html"
+	}
+}
