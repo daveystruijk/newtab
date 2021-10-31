@@ -1,0 +1,30 @@
+{
+  "name": "newtab",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:daveystruijk/newtab.git",
+  "author": "Davey Struijk <mail@daveystruijk.com>",
+  "license": "MIT",
+  "targets": {
+    "webext-dev": {
+      "sourceMap": {
+        "inline": true,
+        "inlineSources": true
+      }
+    },
+    "webext-prod": {}
+  },
+  "scripts": {
+    "start": "parcel src/manifest.json --host localhost --target webext-dev",
+    "build": "parcel build src/manifest.json --target webext-prod"
+  },
+  "devDependencies": {
+    "@parcel/config-webextension": "2.0.0",
+    "parcel": "2.0.0"
+  },
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "use-chrome-storage": "1.0.4"
+  }
+}
