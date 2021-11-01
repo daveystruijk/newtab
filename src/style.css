@@ -5,6 +5,16 @@ body {
   line-height: 15px;
 }
 
+button {
+  background-color: #333;
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+}
+
 /* Tasks */
 
 .tasks {
@@ -14,35 +24,69 @@ body {
 .task {
   position: relative;
   background-color: #222;
-  padding: 8px 16px;
+  padding: 8px 8px;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: text;
+  margin-bottom: 8px;
+  max-width: 400px;
+}
+
+.task:hover {
+  background-color: #252525;
 }
 
 .task button {
-  background-color: #333;
+  display: flex;
+  visibility: hidden;
   border: 1px solid #444;
   margin-left: 8px;
   padding: 8px 12px;
 }
 
-.task button:hover {
-  background-color: #444;
+.task:hover button {
+  visibility: visible;
+}
+
+button.complete {
+  color: green;
+}
+
+button.delete {
+  color: red;
 }
 
 .icon {
   width: 16px;
   height: 16px;
+  margin-left: 8px;
   margin-right: 16px;
+  cursor: pointer;
 }
 
 .task.category-personal {
+  border-left: 6px solid #F6BB3F;
+}
+
+.task.category-momo {
   border-left: 6px solid #C697C5;
 }
 
 .category-personal .icon {
+  background: transparent url('./icons/man.png?height=16') no-repeat top left;
+}
+
+.category-momo .icon {
   background: transparent url('./icons/momo.png?height=16') no-repeat top left;
+}
+
+.list-controls {
+  padding: 8px 8px;
+}
+
+.task-buttons {
+  display: flex;
+  margin-left: auto;
 }
 
 .debug {
