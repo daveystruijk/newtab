@@ -1,12 +1,53 @@
 body {
   background-color: #333;
   color: #f0f0f0;
+  font-size: 16px;
+  line-height: 15px;
 }
+
+/* Tasks */
 
 .tasks {
 
 }
 
 .task {
-
+  position: relative;
+  background-color: #222;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
+
+.task button {
+  background-color: #333;
+  border: 1px solid #444;
+  margin-left: 8px;
+  padding: 8px 12px;
+}
+
+.task button:hover {
+  background-color: #444;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 16px;
+}
+
+.task.category-personal {
+  border-left: 6px solid #C697C5;
+}
+
+.category-personal .icon {
+  background: transparent url('./icons/momo.png?height=16') no-repeat top left;
+}
+
+.debug {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
