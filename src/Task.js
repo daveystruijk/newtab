@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
-const CATEGORIES = ['personal', 'momo'];
+export const ESTIMATES = [15, 30, 60, 120, 240];
+export const CATEGORIES = ['personal', 'momo'];
+export const COLORS = {
+  personal: '#F6BB3F',
+  momo: '#C697C5',
+};
 
 export function Task(props) {
   const { task, setTask, deleteTask, moveTaskUp, moveTaskDown } = props;
@@ -14,11 +19,42 @@ export function Task(props) {
   const onIconClick = (e) => {
     e.stopPropagation();
     const i = CATEGORIES.indexOf(task.category);
-    setTask({ ...task, category: CATEGORIES[(i + 1) % CATEGORIES.length] });
+    const category = CATEGORIES[(i + 1) % CATEGORIES.length];
+    setTask({ ...task, category });
+  };
+
+  const onIconRightClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const i = CATEGORIES.indexOf(task.category);
+    const category =
+      i === 0
+        ? CATEGORIES[CATEGORIES.length - 1]
+        : CATEGORIES[(i - 1) % CATEGORIES.length];
+    setTask({ ...task, category });
+  };
+
+  const onEstimateClick = (e) => {
+    e.stopPropagation();
+    const i = ESTIMATES.indexOf(task.estimate);
+    const estimate = ESTIMATES[(i + 1) % ESTIMATES.length];
+    setTask({ ...task, estimate });
+  };
+
+  const onEstimateRightClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const i = ESTIMATES.indexOf(task.estimate);
+    const estimate =
+      i === 0
+        ? ESTIMATES[ESTIMATES.length - 1]
+        : ESTIMATES[(i - 1) % ESTIMATES.length];
+    setTask({ ...task, estimate });
   };
 
   const onTaskComplete = (e) => {
     e.stopPropagation();
+    setTask({ ...task, done: !task.done });
   };
 
   const onTaskDelete = (e) => {
@@ -40,17 +76,33 @@ export function Task(props) {
 
   const onUp = (e) => {
     e.stopPropagation();
-    moveTaskUp(task.id);
+    moveTaskUp(task);
   };
 
   const onDown = (e) => {
     e.stopPropagation();
-    moveTaskDown(task.id);
+    moveTaskDown(task);
   };
 
+  const estimate = task.estimate;
+
   return (
-    <a className={`task category-${task.category}`} onClick={onTaskClick}>
-      <div className="icon" onClick={onIconClick} />
+    <a
+      className={`task category-${task.category}${task.done ? ' done' : ''}`}
+      onClick={onTaskClick}
+    >
+      <div
+        className="icon"
+        onClick={onIconClick}
+        onContextMenu={onIconRightClick}
+      />
+      <div
+        className="estimate"
+        onClick={onEstimateClick}
+        onContextMenu={onEstimateRightClick}
+      >
+        {estimate}
+      </div>
       {!isEditing && <div className="view">{task.text}</div>}
       {isEditing && (
         <input
@@ -63,17 +115,19 @@ export function Task(props) {
         />
       )}
       <div className="task-buttons">
+        <div className="buttons-vertical">
+          <button className="up" onClick={onUp}>
+            ⇧
+          </button>
+          <button className="down" onClick={onDown}>
+            ⇩
+          </button>
+        </div>
         <button className="complete" onClick={onTaskComplete}>
-          ✓
+          {task.done ? '«' : '✓'}
         </button>
         <button className="delete" onClick={onTaskDelete}>
           x
-        </button>
-        <button className="up" onClick={onUp}>
-          ⇧
-        </button>
-        <button className="down" onClick={onDown}>
-          ⇩
         </button>
       </div>
     </a>

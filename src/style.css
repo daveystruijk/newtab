@@ -1,3 +1,8 @@
+html, body {
+  margin: 0; padding: 0;
+  max-height: 100%;
+}
+
 body {
   background-color: #333;
   color: #f0f0f0;
@@ -18,7 +23,11 @@ button:hover {
 /* Tasks */
 
 .tasks {
-
+  width: 50%;
+  display: block;
+  padding: 0px 16px;
+  overflow: auto;
+  max-height: 100%;
 }
 
 .task {
@@ -29,7 +38,6 @@ button:hover {
   align-items: center;
   cursor: text;
   margin-bottom: 8px;
-  max-width: 400px;
 }
 
 .task:hover {
@@ -46,6 +54,31 @@ button:hover {
 
 .task:hover button {
   visibility: visible;
+}
+
+.view {
+
+}
+
+.edit {
+  width: 100%;
+}
+
+.done {
+
+}
+
+.done .view {
+  color: #666;
+  text-decoration: line-through;
+}
+
+.done .estimate {
+  color: #666;
+}
+
+.done .complete {
+  color: #f0f0f0;
 }
 
 button.complete {
@@ -80,6 +113,19 @@ button.delete {
   background: transparent url('./icons/momo.png?height=16') no-repeat top left;
 }
 
+.estimate {
+  margin-right: 16px;
+  width: 32px;
+  color: #ccc;
+  user-select: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.estimate:hover {
+  color: #f0f0f0;
+}
+
 .list-controls {
   padding: 8px 8px;
 }
@@ -87,6 +133,12 @@ button.delete {
 .task-buttons {
   display: flex;
   margin-left: auto;
+  height: 32px;
+}
+
+.buttons-vertical button {
+  padding: 0 12px;
+  line-height: 14px;
 }
 
 .debug {
@@ -95,3 +147,24 @@ button.delete {
   right: 0;
 }
 
+.day h2 {
+  text-transform: capitalize;
+  font-size: 18px;
+  margin-top: 24px;
+  color: #aaa;
+}
+
+.day h2.today {
+  color: #f0f0f0;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.progress span {
+  margin-left: 8px;
+  color: #ccc;
+}
