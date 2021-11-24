@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import dayjs from 'dayjs';
 
-export const ESTIMATES = [15, 30, 60, 120, 240];
-export const CATEGORIES = ['personal', 'momo'];
+export const ESTIMATES = [15, 30, 60, 120, 180, 240];
+export const CATEGORIES = ['personal', 'momo', 'freelance', 'tu'];
 export const COLORS = {
-  personal: '#F6BB3F',
+  personal: '#28CD41',
   momo: '#C697C5',
+  freelance: '#F6BB3F',
+  tu: '#0697CF',
 };
 
 export function Task(props) {
@@ -84,7 +87,10 @@ export function Task(props) {
     moveTaskDown(task);
   };
 
-  const estimate = task.estimate;
+  const estimate =
+    task.estimate < 60
+      ? `${task.estimate}m`
+      : `${dayjs.duration(task.estimate, 'minutes').asHours()}h`;
 
   return (
     <a

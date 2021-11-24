@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { groupBy } from 'lodash';
 import MultiProgress from 'react-multi-progress';
@@ -18,13 +18,17 @@ export function Day(props) {
 
   const hours = sumTaskHours(dayTasks);
   const isToday = date.isSame(dayjs(), 'day');
-  const tasksByCategory = groupBy(dayTasks, 'category');
-  const hoursByCategory = Object.keys(tasksByCategory).map((category) => ({
-    value: sumTaskHours(tasksByCategory[category]) / HOURS_PER_DAY * 100,
-    color: COLORS[category],
+  const elements = dayTasks.map((task) => ({
+    value: dayjs.duration(task.estimate, 'minutes').asHours() / HOURS_PER_DAY * 100,
+    color: COLORS[task.category],
   }));
 
-  console.log(hoursByCategory);
+  useEffect(() => {
+    if (isToday) {
+      const el = document.getElementsByClassName('today')[0];
+      el.scrollIntoView();
+    }
+  }, [isToday]);
 
   return (
     <div className="day">
@@ -33,8 +37,9 @@ export function Day(props) {
       </h2>
       <div className="progress">
         <MultiProgress
-          elements={hoursByCategory}
+          elements={elements}
           backgroundColor="#222"
+          transitionTime={0}
         />
         <span>{hours}h</span>
       </div>

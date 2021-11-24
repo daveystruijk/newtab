@@ -20,11 +20,8 @@ const swap =
     xs.length > 1 ? (([xs[x], xs[y]] = [xs[y], xs[x]]), xs) : xs;
 
 const insert = (arr, index, newItem) => [
-  // part of the array before the specified index
   ...arr.slice(0, index),
-  // inserted item
   newItem,
-  // part of the array after the specified index
   ...arr.slice(index),
 ];
 
@@ -59,7 +56,6 @@ export function App() {
     const index = tasks.findIndex((task) =>
       dayjs(task.day, DAY_FORMAT).isAfter(dayjs())
     );
-    console.log(index);
     return setTasks(insert(tasks, index, newTask(id)));
   };
 
@@ -86,15 +82,20 @@ export function App() {
     }
   };
 
-  console.log(tasks);
-
   // TODO: Tags on the side, which auto-match
   // - Clicking a tag will show only tasks from that tag
+
+  const tomorrow = dayjs().add(1, 'day');
+  const isTomorrow = (date) => date.isSame(tomorrow, 'day');
 
   const taskList = [];
   const tasksPerDay = groupBy(tasks, 'day');
   for (let day of Object.keys(tasksPerDay).sort()) {
     const dayTasks = tasksPerDay[day];
+    const dayDate = dayjs(day, DAY_FORMAT);
+    if (isTomorrow(dayDate)) {
+      taskList.push(<button onClick={addTask} key="add">+</button>);
+    }
     taskList.push(<Day key={day} day={day} dayTasks={dayTasks} />);
     for (let task of dayTasks) {
       taskList.push(
@@ -114,8 +115,9 @@ export function App() {
     <div>
       <div className="tasks">{taskList}</div>
       <div className="debug">
-        <button onClick={addTask}>+</button>
+        {/*
         <button onClick={resetTasks}>Reset</button>
+        */}
       </div>
     </div>
   );

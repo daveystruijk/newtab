@@ -1,6 +1,9 @@
 html, body {
   margin: 0; padding: 0;
-  max-height: 100%;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -8,6 +11,7 @@ body {
   color: #f0f0f0;
   font-size: 16px;
   line-height: 15px;
+  padding-bottom: 100%;
 }
 
 button {
@@ -23,11 +27,9 @@ button:hover {
 /* Tasks */
 
 .tasks {
-  width: 50%;
+  width: 66.67%;
   display: block;
   padding: 0px 16px;
-  overflow: auto;
-  max-height: 100%;
 }
 
 .task {
@@ -95,14 +97,25 @@ button.delete {
   margin-left: 8px;
   margin-right: 16px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .task.category-personal {
-  border-left: 6px solid #F6BB3F;
+  /*border-left: 6px solid #F6BB3F;*/
+  
+  border-left: 6px solid #28CD41;
 }
 
 .task.category-momo {
   border-left: 6px solid #C697C5;
+}
+
+.task.category-freelance {
+  border-left: 6px solid #F6BB3F;
+}
+
+.task.category-tu {
+  border-left: 6px solid #0697CF;
 }
 
 .category-personal .icon {
@@ -113,6 +126,14 @@ button.delete {
   background: transparent url('./icons/momo.png?height=16') no-repeat top left;
 }
 
+.category-freelance .icon {
+  background: transparent url('./icons/freelance.png?height=16') no-repeat top left;
+}
+
+.category-tu .icon {
+  background: transparent url('./icons/tu.png?height=16') no-repeat top left;
+}
+
 .estimate {
   margin-right: 16px;
   width: 32px;
@@ -120,6 +141,7 @@ button.delete {
   user-select: none;
   text-align: center;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .estimate:hover {
@@ -142,15 +164,15 @@ button.delete {
 }
 
 .debug {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  top: 0;
   right: 0;
 }
 
 .day h2 {
   text-transform: capitalize;
   font-size: 18px;
-  margin-top: 24px;
+  padding-top: 24px;
   color: #aaa;
 }
 
