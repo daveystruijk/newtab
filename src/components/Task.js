@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 
-export const ESTIMATES = [15, 30, 60, 120, 180, 240];
+export const ESTIMATES = [15, 30, 60, 120, 180, 240, 480];
 export const CATEGORIES = ['personal', 'momo', 'freelance', 'tu'];
 export const COLORS = {
   personal: '#28CD41',
@@ -93,49 +93,51 @@ export function Task(props) {
       : `${dayjs.duration(task.estimate, 'minutes').asHours()}h`;
 
   return (
-    <a
-      className={`task category-${task.category}${task.done ? ' done' : ''}`}
-      onClick={onTaskClick}
-    >
-      <div
-        className="icon"
-        onClick={onIconClick}
-        onContextMenu={onIconRightClick}
-      />
-      <div
-        className="estimate"
-        onClick={onEstimateClick}
-        onContextMenu={onEstimateRightClick}
+    <div className="task-container">
+      <a
+        className={`task category-${task.category}${task.done ? ' done' : ''}`}
+        onClick={onTaskClick}
       >
-        {estimate}
-      </div>
-      {!isEditing && <div className="view">{task.text}</div>}
-      {isEditing && (
-        <input
-          className="edit"
-          value={task.text}
-          onChange={onInputChange}
-          onKeyDown={onInputKeyDown}
-          onBlur={onInputBlur}
-          autoFocus={true}
+        <div
+          className="icon"
+          onClick={onIconClick}
+          onContextMenu={onIconRightClick}
         />
-      )}
-      <div className="task-buttons">
-        <div className="buttons-vertical">
-          <button className="up" onClick={onUp}>
-            ⇧
+        <div
+          className="estimate"
+          onClick={onEstimateClick}
+          onContextMenu={onEstimateRightClick}
+        >
+          {estimate}
+        </div>
+        {!isEditing && <div className="view">{task.text}</div>}
+        {isEditing && (
+          <input
+            className="edit"
+            value={task.text}
+            onChange={onInputChange}
+            onKeyDown={onInputKeyDown}
+            onBlur={onInputBlur}
+            autoFocus={true}
+          />
+        )}
+        <div className="task-buttons">
+          <div className="buttons-vertical">
+            <button className="up" onClick={onUp}>
+              ⇧
+            </button>
+            <button className="down" onClick={onDown}>
+              ⇩
+            </button>
+          </div>
+          <button className="complete" onClick={onTaskComplete}>
+            {task.done ? '«' : '✓'}
           </button>
-          <button className="down" onClick={onDown}>
-            ⇩
+          <button className="delete" onClick={onTaskDelete}>
+            x
           </button>
         </div>
-        <button className="complete" onClick={onTaskComplete}>
-          {task.done ? '«' : '✓'}
-        </button>
-        <button className="delete" onClick={onTaskDelete}>
-          x
-        </button>
-      </div>
-    </a>
+      </a>
+    </div>
   );
 }

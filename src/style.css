@@ -33,13 +33,14 @@ button:hover {
 }
 
 .task {
+  flex-grow: 1;
   position: relative;
   background-color: #222;
   padding: 8px 8px;
   display: flex;
   align-items: center;
   cursor: text;
-  margin-bottom: 8px;
+  min-width: 300px;
 }
 
 .task:hover {
@@ -101,8 +102,6 @@ button.delete {
 }
 
 .task.category-personal {
-  /*border-left: 6px solid #F6BB3F;*/
-  
   border-left: 6px solid #28CD41;
 }
 
@@ -152,6 +151,23 @@ button.delete {
   padding: 8px 8px;
 }
 
+.task-container {
+  display: flex;
+  align-items: center;
+  justify-items: flex-end;
+  margin-bottom: 8px;
+}
+
+.task-estimate {
+  color: #666;
+  margin-left: 16px;
+  margin-bottom: -11px;
+  align-self: flex-end;
+  min-width: 48px;
+  text-align: right;
+  font-family: monospace;
+}
+
 .task-buttons {
   display: flex;
   margin-left: auto;
@@ -169,15 +185,28 @@ button.delete {
   right: 0;
 }
 
+.day {
+  min-width: 300px;
+}
+
 .day h2 {
   text-transform: capitalize;
   font-size: 18px;
-  padding-top: 24px;
   color: #aaa;
 }
 
-.day h2.today {
+.today h2 {
   color: #f0f0f0;
+}
+
+.day .title {
+  display: flex;
+  margin-top: 24px;
+}
+
+.day .title button {
+  align-self: center;
+  margin: 8px;
 }
 
 .progress {
@@ -187,6 +216,9 @@ button.delete {
 }
 
 .progress span {
-  margin-left: 8px;
+  margin-left: 16px;
   color: #ccc;
+  min-width: 48px;
+  text-align: right;
+  font-family: monospace;
 }
