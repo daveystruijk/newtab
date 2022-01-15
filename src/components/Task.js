@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
+import { useTaskProvider } from '../providers/TaskProvider';
 
 export const ESTIMATES = [15, 30, 60, 120, 180, 240, 480];
 export const CATEGORIES = ['personal', 'momo', 'freelance', 'tu'];
@@ -10,8 +11,8 @@ export const COLORS = {
   tu: '#0697CF',
 };
 
-export function Task(props) {
-  const { task, setTask, deleteTask, moveTaskUp, moveTaskDown } = props;
+export function Task({ task }) {
+  const { setTask, deleteTask, moveTaskUp, moveTaskDown } = useTaskProvider();
 
   const [isEditing, setIsEditing] = useState(false);
 

@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import dayjs from 'dayjs';
 import MultiProgress from 'react-multi-progress';
-import { COLORS } from './Task';
+import { useTaskProvider } from '../providers/TaskProvider';
+import { Task, COLORS } from './Task';
 
 const HOURS_PER_DAY = 8;
 
-export function Day(props) {
-  const { date, tasks, addTask, children } = props;
+export function Day({ date, tasks }) {
+  const { addTask } = useTaskProvider();
 
   const sumTaskHours = (tasks) =>
     tasks
@@ -47,7 +48,14 @@ export function Day(props) {
           <span>{hours}h</span>
         </div>
       </div>
-      <div>{children}</div>
+      <div>
+        {tasks.map(task =>
+          <Task
+            key={task.id}
+            task={task}
+          />
+        )}
+      </div>
     </div>
   );
 }

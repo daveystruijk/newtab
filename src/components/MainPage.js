@@ -4,10 +4,9 @@ import { groupBy, range } from 'lodash';
 import { DAY_FORMAT } from '../constants';
 import { useTaskProvider } from '../providers/TaskProvider';
 import { Day } from './Day';
-import { Task } from './Task';
 
 export const MainPage = () => {
-  const { tasks, addTask, setTask, deleteTask, moveTaskUp, moveTaskDown } = useTaskProvider();
+  const { tasks } = useTaskProvider();
   const hasTasks = tasks.length > 0;
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export const MainPage = () => {
   const exportTasks = () =>
     navigator.clipboard.writeText(JSON.stringify(tasks));
 
-  const days = range(-30, 60)
+  const days = range(-45, 90)
     .map(i => now.add(i, 'days'))
     .map(date => date.format(DAY_FORMAT));
 
@@ -42,27 +41,12 @@ export const MainPage = () => {
               day={day}
               date={date}
               tasks={tasks}
-              addTask={addTask}
-            >
-              {tasks.map(task => 
-                <Task
-                  key={task.id}
-                  task={task}
-                  setTask={setTask}
-                  deleteTask={deleteTask}
-                  moveTaskUp={moveTaskUp}
-                  moveTaskDown={moveTaskDown}
-                />
-              )}
-            </Day>
+            />
           );
         })}
       </div>
       <div className="debug">
         <button onClick={exportTasks}>Export</button>
-        {/*
-        <button onClick={resetTasks}>Reset</button>
-        */}
       </div>
     </div>
   );
