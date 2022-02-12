@@ -49,12 +49,10 @@ export function Day({ date, tasks }) {
         </div>
       </div>
       <div>
-        {tasks.map(task =>
-          <Task
-            key={task.id}
-            task={task}
-          />
-        )}
+        {tasks.reduce((acc, task) => {
+          acc.push(<Task key={task.id} task={task} />);
+          return acc;
+        }, [])}
       </div>
     </div>
   );

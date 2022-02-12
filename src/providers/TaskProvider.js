@@ -8,13 +8,14 @@ export const useTaskProvider = () => useContext(TaskContext);
 
 const INITIAL_TASKS = [];
 
-const newTask = (id, day = today) => ({
+const newTask = (id, day) => ({
   id,
   category: 'personal',
   text: 'New Task',
   estimate: 30,
   done: false,
   day,
+  created_at: dayjs(),
 });
 
 const getAutoIncrementId = (tasks) =>

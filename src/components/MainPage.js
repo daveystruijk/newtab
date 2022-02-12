@@ -20,7 +20,7 @@ export const MainPage = () => {
   const exportTasks = () =>
     navigator.clipboard.writeText(JSON.stringify(tasks));
 
-  const days = range(-45, 90)
+  const days = range(-300, 90)
     .map(i => now.add(i, 'days'))
     .map(date => date.format(DAY_FORMAT));
 
