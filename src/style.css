@@ -46,6 +46,7 @@ button:hover {
   align-items: center;
   cursor: text;
   min-width: 300px;
+  user-select: none;
 }
 
 .task:hover {
@@ -100,7 +101,7 @@ button:hover {
   align-self: flex-end;
 }
 
-.edit {
+.text {
   width: 100%;
 }
 
@@ -261,4 +262,6 @@ button.delete {
   font-family: monospace;
 }
 
-
+.dragged {
+  z-index: 999;
+}

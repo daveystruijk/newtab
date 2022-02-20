@@ -6,7 +6,7 @@ import { useTaskProvider } from '../providers/TaskProvider';
 import { Day } from './Day';
 
 export const MainPage = () => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const { tasks, setTasks } = useTaskProvider();
   const hasTasks = tasks.length > 0;
@@ -20,8 +20,7 @@ export const MainPage = () => {
     el.scrollIntoView();
   }, [hasTasks, visible]);
 
-  const onGlobalKeyDown = (e) => {
-  };
+  const onGlobalKeyDown = (e) => {};
 
   useEffect(() => {
     window.addEventListener('keydown', onGlobalKeyDown);
@@ -55,8 +54,8 @@ export const MainPage = () => {
     <div onKeyDown={onGlobalKeyDown}>
       <div className="tasks">
         {days.map((day) => {
-          const visible = day === today || day in tasksPerDay;
-          if (!visible) {
+          const showDay = day === today || day in tasksPerDay;
+          if (!showDay) {
             return;
           }
 

@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { useTaskProvider } from '../providers/TaskProvider';
+import { CATEGORIES, CATEGORY_KEYS } from '../categories';
 
 export const ESTIMATES = [15, 30, 60, 120, 180, 240, 480];
-export const CATEGORIES = ['personal', 'momo', 'freelance', 'tu'];
-export const COLORS = {
-  personal: '#28CD41',
-  momo: '#C697C5',
-  freelance: '#F6BB3F',
-  tu: '#0697CF',
-};
 
 export function Task({ task }) {
   const { setTask, deleteTask, moveTaskUp, moveTaskDown } = useTaskProvider();
@@ -24,19 +18,19 @@ export function Task({ task }) {
 
   const onIconClick = (e) => {
     e.stopPropagation();
-    const i = CATEGORIES.indexOf(task.category);
-    const category = CATEGORIES[(i + 1) % CATEGORIES.length];
+    const i = CATEGORY_KEYS.indexOf(task.category);
+    const category = CATEGORY_KEYS[(i + 1) % CATEGORY_KEYS.length];
     setTask({ ...task, category });
   };
 
   const onIconRightClick = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    const i = CATEGORIES.indexOf(task.category);
+    const i = CATEGORY_KEYS.indexOf(task.category);
     const category =
       i === 0
-        ? CATEGORIES[CATEGORIES.length - 1]
-        : CATEGORIES[(i - 1) % CATEGORIES.length];
+        ? CATEGORY_KEYS[CATEGORY_KEYS.length - 1]
+        : CATEGORY_KEYS[(i - 1) % CATEGORY_KEYS.length];
     setTask({ ...task, category });
   };
 
@@ -101,6 +95,12 @@ export function Task({ task }) {
       ? `${task.estimate}m`
       : `${dayjs.duration(task.estimate, 'minutes').asHours()}h`;
 
+  const integrations =
+    CATEGORIES[task.category].integrations &&
+    CATEGORIES[task.category].integrations.map((integration) => {
+      return integration(task);
+    });
+
   return (
     <div className="task-container">
       <a
@@ -122,7 +122,7 @@ export function Task({ task }) {
         {!isEditing && <div className="view">{task.text}</div>}
         {isEditing && (
           <input
-            className="edit"
+            className="text"
             value={text}
             onChange={onInputChange}
             onKeyDown={onInputKeyDown}
@@ -131,6 +131,13 @@ export function Task({ task }) {
           />
         )}
         <div className="task-buttons">
+          {integrations}
+          <button className="complete" onClick={onTaskComplete}>
+            {task.done ? '«' : '✓'}
+          </button>
+          <button className="delete" onClick={onTaskDelete}>
+            x
+          </button>
           <div className="buttons-vertical">
             <button className="up" onClick={onUp}>
               ⇧
@@ -139,12 +146,6 @@ export function Task({ task }) {
               ⇩
             </button>
           </div>
-          <button className="complete" onClick={onTaskComplete}>
-            {task.done ? '«' : '✓'}
-          </button>
-          <button className="delete" onClick={onTaskDelete}>
-            x
-          </button>
         </div>
       </a>
     </div>

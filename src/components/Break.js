@@ -76,6 +76,9 @@ export function Break({ task }) {
           />
         )}
         <div className="task-buttons">
+          <button className="delete" onClick={onTaskDelete}>
+            x
+          </button>
           <div className="buttons-vertical">
             <button className="up" onClick={onUp}>
               ⇧
@@ -84,9 +87,6 @@ export function Break({ task }) {
               ⇩
             </button>
           </div>
-          <button className="delete" onClick={onTaskDelete}>
-            x
-          </button>
         </div>
       </a>
     </div>

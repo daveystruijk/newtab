@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import MultiProgress from 'react-multi-progress';
-import { COLORS } from './Task';
+import { CATEGORIES } from '../categories';
 
 const HOURS_PER_DAY = 8;
 
@@ -17,7 +17,7 @@ export function DayProgress({ tasks }) {
     value:
       (dayjs.duration(task.estimate, 'minutes').asHours() / HOURS_PER_DAY) *
       100,
-    color: COLORS[task.category],
+    color: CATEGORIES[task.category].color,
   }));
 
   return (

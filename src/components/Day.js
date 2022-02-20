@@ -1,9 +1,9 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import { useTaskProvider } from '../providers/TaskProvider';
-import { DayProgress } from './DayProgress';
 import { Task } from './Task';
 import { Break } from './Break';
+import { DayProgress } from './DayProgress';
 
 export function Day({ date, tasks }) {
   const { addTask } = useTaskProvider();
