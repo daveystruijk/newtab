@@ -64,8 +64,40 @@ button:hover {
   visibility: visible;
 }
 
-.view {
 
+.task input:focus {
+  outline: none;
+}
+
+.task input:first-line {
+  display: inline-block;    
+}
+
+.task input {
+  background-color: transparent;
+  color: #f0f0f0;
+  font-size: 16px;
+}
+
+.break {
+  height: 16px;
+  padding-left: 24px;
+  background-color: transparent;
+}
+
+.break:hover {
+  background-color: #353535;
+}
+
+.view {
+  display: flex;
+  flex-grow: 1;
+}
+
+.countdown {
+  margin-left: 16px;
+  color: #F6BB3F;
+  align-self: flex-end;
 }
 
 .edit {
@@ -198,6 +230,7 @@ button.delete {
   text-transform: capitalize;
   font-size: 18px;
   color: #aaa;
+  margin-right: 12px;
 }
 
 .today h2 {
@@ -227,3 +260,5 @@ button.delete {
   text-align: right;
   font-family: monospace;
 }
+
+

@@ -6,8 +6,8 @@ import { MainPage } from './MainPage';
 require('dayjs/locale/nl');
 dayjs.locale('nl');
 
-const duration = require('dayjs/plugin/duration');
-dayjs.extend(duration);
+dayjs.extend(require('dayjs/plugin/duration'));
+dayjs.extend(require('dayjs/plugin/customParseFormat'));
 
 export function App() {
   return (

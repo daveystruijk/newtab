@@ -14,9 +14,11 @@ export const COLORS = {
 export function Task({ task }) {
   const { setTask, deleteTask, moveTaskUp, moveTaskDown } = useTaskProvider();
 
+  const [text, setText] = useState(task.text);
   const [isEditing, setIsEditing] = useState(false);
 
-  const onTaskClick = () => {
+  const onTaskClick = (e) => {
+    e.stopPropagation();
     setIsEditing(true);
   };
 
@@ -66,16 +68,22 @@ export function Task({ task }) {
     deleteTask(task.id);
   };
 
-  const onInputChange = (e) => setTask({ ...task, text: e.target.value });
+  const onInputChange = (e) => setText(e.target.value);
 
   const onInputKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === 'Escape') {
       setIsEditing(false);
+      setTask({ ...task, text });
+    } else if (e.key === 'ArrowUp') {
+      moveTaskUp(task);
+    } else if (e.key === 'ArrowDown') {
+      moveTaskDown(task);
     }
   };
 
   const onInputBlur = () => {
     setIsEditing(false);
+    setTask({ ...task, text });
   };
 
   const onUp = (e) => {
@@ -115,7 +123,7 @@ export function Task({ task }) {
         {isEditing && (
           <input
             className="edit"
-            value={task.text}
+            value={text}
             onChange={onInputChange}
             onKeyDown={onInputKeyDown}
             onBlur={onInputBlur}

@@ -1,27 +1,14 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import MultiProgress from 'react-multi-progress';
 import { useTaskProvider } from '../providers/TaskProvider';
-import { Task, COLORS } from './Task';
-
-const HOURS_PER_DAY = 8;
+import { DayProgress } from './DayProgress';
+import { Task } from './Task';
+import { Break } from './Break';
 
 export function Day({ date, tasks }) {
   const { addTask } = useTaskProvider();
 
-  const sumTaskHours = (tasks) =>
-    tasks
-      .map((task) => dayjs.duration(task.estimate, 'minutes').asHours())
-      .reduce((a, b) => a + b, 0);
-
-  const hours = sumTaskHours(tasks);
   const isToday = date.isSame(dayjs(), 'day');
-  const elements = tasks.map((task) => ({
-    value:
-      (dayjs.duration(task.estimate, 'minutes').asHours() / HOURS_PER_DAY) *
-      100,
-    color: COLORS[task.category],
-  }));
 
   return (
     <div>
@@ -32,27 +19,29 @@ export function Day({ date, tasks }) {
             onClick={() => {
               addTask(date);
             }}
-            key="add"
           >
             +
           </button>
+          <button
+            onClick={() => {
+              addTask(date, 'break');
+            }}
+          >
+            B
+          </button>
         </div>
-        <div className="progress">
-          <MultiProgress
-            elements={elements}
-            backgroundColor="#222"
-            transitionTime={0}
-            round={false}
-            roundLastElement={false}
-          />
-          <span>{hours}h</span>
-        </div>
+        <DayProgress
+          tasks={tasks.filter((task) => task.task_type === 'task')}
+        />
       </div>
       <div>
-        {tasks.reduce((acc, task) => {
-          acc.push(<Task key={task.id} task={task} />);
-          return acc;
-        }, [])}
+        {tasks.map((task) => {
+          if (task.task_type === 'break') {
+            return <Break key={task.id} task={task} />;
+          } else {
+            return <Task key={task.id} task={task} />;
+          }
+        })}
       </div>
     </div>
   );

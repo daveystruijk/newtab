@@ -10,12 +10,21 @@ const INITIAL_TASKS = [];
 
 const newTask = (id, day) => ({
   id,
-  category: 'personal',
+  day,
   text: 'New Task',
+  created_at: dayjs(),
+  task_type: 'task',
+  category: 'personal',
   estimate: 30,
   done: false,
+});
+
+const newBreak = (id, day) => ({
+  id,
   day,
+  text: 'New Break',
   created_at: dayjs(),
+  task_type: 'break',
 });
 
 const getAutoIncrementId = (tasks) =>
@@ -37,12 +46,18 @@ const insert = (arr, index, newItem) => [
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useChromeStorageLocal('tasks', INITIAL_TASKS);
 
-  const addTask = (date = dayjs()) => {
+  const addTask = (date = dayjs(), task_type = 'task') => {
     const id = getAutoIncrementId(tasks);
     const index = tasks.findIndex((task) =>
-      dayjs(task.day, DAY_FORMAT).isAfter(date)
+      dayjs(task.day, DAY_FORMAT).isAfter(date.subtract(1, 'day'))
     );
-    return setTasks(insert(tasks, index, newTask(id, date.format(DAY_FORMAT))));
+    const day = date.format(DAY_FORMAT);
+    const task = task_type === 'task' ? newTask(id, day) : newBreak(id, day);
+    if (index === -1) {
+      return setTasks([ ...tasks, task]);
+    } else {
+      return setTasks(insert(tasks, index, task));
+    }
   };
 
   const setTask = (t) =>
