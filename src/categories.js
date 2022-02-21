@@ -1,4 +1,3 @@
-import { } from './integrations/tu';
 
 export const CATEGORIES = {
   personal: {
@@ -12,15 +11,6 @@ export const CATEGORIES = {
   },
   tu: {
     color: '#0697CF',
-    integrations: [
-      (task) => (
-        <button key="tu-link" onClick={(e) => {
-          e.stopPropagation();
-        }}>
-          t
-        </button>
-      ),
-    ],
   },
 };
 

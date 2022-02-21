@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
+import { DAY_FORMAT } from '../constants';
 import { useTaskProvider } from '../providers/TaskProvider';
 import { CATEGORIES, CATEGORY_KEYS } from '../categories';
+import { Countdown } from './Countdown';
 
 export const ESTIMATES = [15, 30, 60, 120, 180, 240, 480];
 
@@ -95,11 +97,10 @@ export function Task({ task }) {
       ? `${task.estimate}m`
       : `${dayjs.duration(task.estimate, 'minutes').asHours()}h`;
 
-  const integrations =
-    CATEGORIES[task.category].integrations &&
-    CATEGORIES[task.category].integrations.map((integration) => {
-      return integration(task);
-    });
+  const now = dayjs();
+  const isToday = task.day === now.format(DAY_FORMAT);
+  const timeMatches = task.text.match(/\d\d?\:\d\d/);
+  const breakAt = timeMatches ? dayjs(timeMatches[0], 'HH:mm') : null;
 
   return (
     <div className="task-container">
@@ -119,7 +120,12 @@ export function Task({ task }) {
         >
           {estimate}
         </div>
-        {!isEditing && <div className="view">{task.text}</div>}
+        {!isEditing && (
+          <div className="view">
+            {task.text}
+            {isToday && <Countdown from={now} to={breakAt} />}
+          </div>
+        )}
         {isEditing && (
           <input
             className="text"
@@ -131,7 +137,6 @@ export function Task({ task }) {
           />
         )}
         <div className="task-buttons">
-          {integrations}
           <button className="complete" onClick={onTaskComplete}>
             {task.done ? '«' : '✓'}
           </button>
